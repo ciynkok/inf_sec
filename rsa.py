@@ -15,9 +15,17 @@ def generate_prime(n):
         if check_prime(p):
             return p
 
-def generate_keys(bits):
-    p = generate_prime(bits)
-    q = generate_prime(bits)
+
+def generate_keys(bits, p=None, q=None):
+    if p is None:
+        p = generate_prime(bits)
+    elif not check_prime(p):
+        return
+    if q is None:
+        q = generate_prime(bits)
+    elif not check_prime(q):
+        return
+
     while p == q:
         q = generate_prime(bits)
     n = p * q
@@ -30,81 +38,38 @@ def generate_keys(bits):
         e = random.randrange(1, phi)
         gcd, x, y = extended_gcd(e, phi)
 
-
     d = x % phi
 
     return (e, n), (d, n)
 
 
-# def generate_rsa_keys(bit_length):
-#     """Построение схемы RSA"""
-#     min_val = 2 ** (bit_length // 2 - 1)
-#     max_val = 2 ** (bit_length // 2)
-#     p = generate_prime(bit_length)
-#     q = generate_prime(bit_length)
-#
-#     # while True:
-#     #     p = random.randrange(min_val, max_val)
-#     #     if check_prime(p):
-#     #         break
-#     #
-#     # while True:
-#     #     q = random.randrange(min_val, max_val)
-#     #     if check_prime(q) and p != q:
-#     #         break
-#
-#     n = p * q
-#     phi = (p - 1) * (q - 1)
-#
-#     e = 65537
-#     if math.gcd(e, phi) != 1:
-#         e = 3
-#         while math.gcd(e, phi) != 1:
-#             e += 2
-#
-#     _, d, _ = extended_gcd(e, phi)
-#     d = d % phi
-#     if d < 0:
-#         d += phi
-#
-#     return (e, n), (d, n)
-
-
-
-
-# def encrypt(pk, plaintext):
-#     key, n = pk
-#     cipher = []
-#     for char in plaintext:
-#         cipher.append(mod_pow(ord(char), key) % n)
-#     return cipher
-
 def rsa_encrypt(message, public_key):
-
     e, n = public_key
     return mod_pow(message, e, n)
 
 
-def rsa_decrypt(ciphertext, private_key):
+def encrypt(plaintext, public_key):
+    key, n = public_key
+    cipher = [mod_pow(ord(char), key, n) for char in plaintext]
+    return cipher
 
+
+def decrypt(ciphertext, private_key):
+    key, n = private_key
+    plain = [chr(mod_pow(char, key, n)) for char in ciphertext]
+    return ''.join(plain)
+
+
+def rsa_decrypt(ciphertext, private_key):
     d, n = private_key
     return mod_pow(ciphertext, d, n)
 
 
-
-# def decrypt(pk, ciphertext):
-#     key, n = pk
-#     plain = []
-#     for char in ciphertext:
-#         plain.append(chr(fast_pow(char, key) % n))
-#     return ''.join(plain)
-
-
-# pub_key, private_key = generate_keys(10)
+# pub_key, priv_key = generate_keys(1024)
 # print('Публичный ключ: ' + str(pub_key[0]))
-# print('Секреный ключ: ' + str(private_key[0]))
-# in_text = 123
-# cipher = rsa_encrypt(in_text, pub_key)
+# print('Секреный ключ: ' + str(priv_key[0]))
+# in_text = input('Введите текскт: ')
+# cipher = encrypt(in_text, pub_key)
 # print(cipher)
-# print(rsa_decrypt(cipher, private_key))
+# print(decrypt(cipher, priv_key))
 

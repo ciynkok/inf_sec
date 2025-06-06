@@ -1,12 +1,12 @@
 import time
 from rsa import generate_keys, rsa_encrypt, rsa_decrypt
 import random
-from fact_crack_rsa import crack_rsa_factorization
+from fact_crack_rsa import crack_rsa_factorization, trial_division
 from mess_crack_rsa import crack_rsa_message_brute
 from matplotlib import pyplot as plt
 
+
 def simulate_rsa_cracking(bit_lengths):
-    """Построение графиков и логирование результатов"""
     factor_times = []
     brute_times = []
     factor_iters = []
@@ -37,26 +37,15 @@ def simulate_rsa_cracking(bit_lengths):
         print(f"Найдены делители: p={p}, q={q}")
         print(f"Итераций: {f_iters}, Время: {factor_time:.4f} сек")
 
-        # 7. ВЗЛОМ МЕТОДОМ ПЕРЕБОРА СООБЩЕНИЙ
-        print("Запуск перебора сообщений...")
+        print("Запуск наивного алгоритма")
         start_time = time.time()
-        # Для больших ключей используем ограниченный перебор
-        max_attempts = min(10 ** 6, n) if bits > 16 else n
-        cracked_message, b_iters = crack_rsa_message_brute(
-            ciphertext,
-            e,
-            n,
-            max_attempts
-        )
-        brute_time = time.time() - start_time
-        brute_times.append(brute_time)
-        brute_iters.append(b_iters)
+        p, q, f_iters = trial_division(n)
+        factor_time = time.time() - start_time
+        brute_times.append(factor_time)
+        brute_iters.append(f_iters)
+        print(f"Найдены делители: p={p}, q={q}")
+        print(f"Итераций: {f_iters}, Время: {factor_time:.4f} сек")
         brute_bit_lengths.append(bits)
-        if cracked_message is not None:
-            print(f"Найдено сообщение: {cracked_message}")
-        else:
-            print("Сообщение не найдено (достигнут лимит попыток)")
-        print(f"Итераций: {b_iters}, Время: {brute_time:.4f} сек")
 
     # Построение графиков
     plt.figure(figsize=(14, 12))
@@ -131,5 +120,5 @@ def simulate_rsa_cracking(bit_lengths):
 
 if __name__ == "__main__":
     # Размеры ключей для тестирования
-    bit_lengths = [i * 4 for i in range(1, 9)]
+    bit_lengths = [i * 4 for i in range(1, 8)]
     simulate_rsa_cracking(bit_lengths)
