@@ -1,5 +1,5 @@
 import rsa
-from num_pow import fast_pow
+from num_pow import mod_pow
 
 
 def crack_rsa_message_brute(ciphertext: int, e: int, n: int, max_attempts: int = 10**7):
@@ -7,7 +7,7 @@ def crack_rsa_message_brute(ciphertext: int, e: int, n: int, max_attempts: int =
 
     for m in range(1, max_attempts + 1):
         iterations += 1
-        if (fast_pow(m, e) % n) == ciphertext:
+        if mod_pow(m, e, n) == ciphertext:
             return m, iterations
     return None, iterations
 

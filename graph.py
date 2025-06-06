@@ -96,7 +96,7 @@ def simulate_rsa_cracking(bit_lengths):
     plt.plot(bit_lengths, factor_iters, 'bo-', label='Факторизация')
     plt.plot(bit_lengths, brute_iters, 'rs-', label='Перебор сообщений')
 
-    plt.title('Сравнение количества итераций при взломе RSA', fontsize=14)
+    plt.title('Итерации при взломе RSA', fontsize=14)
     plt.xlabel('Размер ключа (бит)', fontsize=12)
     plt.ylabel('Количество итераций', fontsize=12)
     plt.yscale('log')
@@ -131,5 +131,5 @@ def simulate_rsa_cracking(bit_lengths):
 
 if __name__ == "__main__":
     # Размеры ключей для тестирования
-    bit_lengths = [i * 4 for i in range(1, 17)]
+    bit_lengths = [i * 4 for i in range(1, 9)]
     simulate_rsa_cracking(bit_lengths)
