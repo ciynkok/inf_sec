@@ -4,43 +4,44 @@ from check_prime import check_prime
 from gcd import extended_gcd
 from num_pow import mod_pow
 import secrets
+from shame_rsa import generate_keys
 import sys
 sys.set_int_max_str_digits(1000000)
 
 
-def generate_prime(n):
-    while True:
-        p = secrets.randbits(n)
-        p = p | (1 << n - 1) | 1
-        if check_prime(p):
-            return p
-
-
-def generate_keys(bits, p=None, q=None):
-    if p is None:
-        p = generate_prime(bits)
-    elif not check_prime(p):
-        return
-    if q is None:
-        q = generate_prime(bits)
-    elif not check_prime(q):
-        return
-
-    while p == q:
-        q = generate_prime(bits)
-    n = p * q
-    phi = (p - 1) * (q - 1)
-
-    e = random.randrange(1, phi)
-
-    gcd, x, y = extended_gcd(e, phi)
-    while gcd != 1:
-        e = random.randrange(1, phi)
-        gcd, x, y = extended_gcd(e, phi)
-
-    d = x % phi
-
-    return (e, n), (d, n)
+# def generate_prime(n):
+#     while True:
+#         p = secrets.randbits(n)
+#         p = p | (1 << n - 1) | 1
+#         if check_prime(p):
+#             return p
+#
+#
+# def generate_keys(bits, p=None, q=None):
+#     if p is None:
+#         p = generate_prime(bits)
+#     elif not check_prime(p):
+#         return
+#     if q is None:
+#         q = generate_prime(bits)
+#     elif not check_prime(q):
+#         return
+#
+#     while p == q:
+#         q = generate_prime(bits)
+#     n = p * q
+#     phi = (p - 1) * (q - 1)
+#
+#     e = random.randrange(1, phi)
+#
+#     gcd, x, y = extended_gcd(e, phi)
+#     while gcd != 1:
+#         e = random.randrange(1, phi)
+#         gcd, x, y = extended_gcd(e, phi)
+#
+#     d = x % phi
+#
+#     return (e, n), (d, n)
 
 
 def rsa_encrypt(message, public_key):
@@ -65,11 +66,10 @@ def rsa_decrypt(ciphertext, private_key):
     return mod_pow(ciphertext, d, n)
 
 
-# pub_key, priv_key = generate_keys(1024)
-# print('Публичный ключ: ' + str(pub_key[0]))
-# print('Секреный ключ: ' + str(priv_key[0]))
-# in_text = input('Введите текскт: ')
-# cipher = encrypt(in_text, pub_key)
-# print(cipher)
-# print(decrypt(cipher, priv_key))
+if __name__ == "__main__":
+    pub_key, priv_key = generate_keys(8)
+    in_text = input('Введите текскт: ')
+    cipher = encrypt(in_text, pub_key)
+    print(cipher)
+    print(decrypt(cipher, priv_key))
 

@@ -1,7 +1,8 @@
 import time
 from rsa import generate_keys, rsa_encrypt, rsa_decrypt
 import random
-from fact_crack_rsa import crack_rsa_factorization, trial_division
+from one_crack_rsa import trial_division
+from two_crack_rsa import crack_rsa_factorization
 from mess_crack_rsa import crack_rsa_message_brute
 from matplotlib import pyplot as plt
 

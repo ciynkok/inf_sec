@@ -16,15 +16,11 @@ def trial_division(n):
 
 def check_prime(n, k=5):
     if n <= 1:
-        return False
+        return False, 1, 1
     elif n <= 3:
-        return True
+        return True, None, None
     elif n % 2 == 0:
         return False, 2, n // 2
-
-    # p, q, cont = trial_division(n)
-    # if p != n:
-    #     return False, p, q
 
     d = n - 1
     s = 0
@@ -42,10 +38,12 @@ def check_prime(n, k=5):
             if x == n - 1:
                 break
         else:
-            return False
+            # p, q, cont = trial_division(n)
+            return False, None, None#, p, q
 
-    return True
+    return True, None, None
 
 
-# print(check_prime(667))
+if __name__ == "__main__":
+    print(check_prime(256))
 

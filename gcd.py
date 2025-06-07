@@ -12,7 +12,9 @@ def extended_gcd(a, b):
 
     return old_r, old_s, old_t
 
-# print(extended_gcd(56, 49))
+
+if __name__ == "__main__":
+    print(extended_gcd(56, 49))
 
 
 

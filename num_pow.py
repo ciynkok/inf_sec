@@ -1,10 +1,25 @@
 import sys
 import datetime
+from gcd import extended_gcd
 
 sys.set_int_max_str_digits(1000000)
 
-def mod_pow(base: int, exponent: int, modulus: int) -> int:
-    """Алгоритм быстрого возведения в степень"""
+
+def pow_(base, exponent):
+    result = 1
+    while exponent > 0:
+        if exponent & 1:
+            result = (result * base)
+        base = (base * base)
+        exponent >>= 1
+    return result
+
+
+def mod_pow(base, exponent, modulus):
+    if exponent < 0:
+        gcd, x, y = extended_gcd(base, modulus)
+        base = x % modulus
+        return mod_pow(base, -1 * exponent, modulus)
     if modulus == 1:
         return 0
     base = base % modulus
@@ -16,5 +31,8 @@ def mod_pow(base: int, exponent: int, modulus: int) -> int:
         exponent >>= 1
     return result
 
-# print(mod_pow(3, 1000000, 112312))
+
+if __name__ == "__main__":
+    print(mod_pow(123, 113, 143))
+    print(pow_(2, 1024))
 
