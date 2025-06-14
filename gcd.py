@@ -1,4 +1,3 @@
-
 def extended_gcd(a, b):
     old_r, r = a, b
     old_s, s = 1, 0
@@ -13,8 +12,16 @@ def extended_gcd(a, b):
     return old_r, old_s, old_t
 
 
+# def gcd(a, b):
+#     a, b = max(a, b), min(a, b)
+#
+#     return gcd(b, a - a // b * b)     if b == 0:
+#         return a
+
+
 if __name__ == "__main__":
-    print(extended_gcd(56, 49))
+    print(34 * 34)
+    print(extended_gcd(34 * 34, 35))
 
 
 

@@ -25,7 +25,7 @@ def mod_pow(base, exponent, modulus):
     base = base % modulus
     result = 1
     while exponent > 0:
-        if exponent & 1:
+        if exponent % 2 != 0:
             result = (result * base) % modulus
         base = (base * base) % modulus
         exponent >>= 1
@@ -33,6 +33,5 @@ def mod_pow(base, exponent, modulus):
 
 
 if __name__ == "__main__":
-    print(mod_pow(123, 113, 143))
-    print(pow_(2, 1024))
+    print(mod_pow(5, 2, 3))
 
