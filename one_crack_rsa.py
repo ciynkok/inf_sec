@@ -6,27 +6,34 @@ import shame_rsa as rsa
 from num_pow import mod_pow
 from check_prime import check_prime
 
+
 def factorization(n):
     i = 2
-    count_iters = 0
+    iters = 0
     while i <= np.sqrt(n):
         if n % i == 0:
-            return i, n // i, count_iters
+            return i, n // i, iters
         if i == 2:
             i += 1
         else:
             i += 2
-        count_iters += 1
+        iters += 1
     raise ValueError("n is prime")
 
 
-if __name__ == "__main__":
-    pub_key, priv_key = rsa.generate_keys(8)
-    e, n = pub_key
-    d = priv_key[0]
+def crack_rsa(e, n):
     p, q, k = factorization(n)
     phi = (p - 1) * (q - 1)
-    d1 = mod_pow(e, -1, phi)
-    print(d1, d)
+    d = mod_pow(e, -1, phi)
+    return d, k
 
+
+if __name__ == "__main__":
+    pub_key, priv_key = rsa.generate_keys(20)
+    e, n = pub_key
+    d = priv_key[0]
+    d1, k = crack_rsa(e, n)
+    print('Секретный ключ: ' + str(d))
+    print('Расшифрованный секретный ключ: ' + str(d1))
+    print('Итерации: ' + str(k))
 

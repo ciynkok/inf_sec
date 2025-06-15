@@ -21,18 +21,20 @@ def generate_keys(bits, p=0, q=0):
     if q == 0:
         q = generate_prime(bits)
 
+    if not check_prime(p) and not check_prime(q):
+        raise ValueError('p или q не являются простыми')
+
     while p == q:
         q = generate_prime(bits)
 
     n = p * q
     phi = (p - 1) * (q - 1)
 
-    e = random.randrange(1, phi)
+    e = 65537#random.randrange(1, phi)
 
     gcd, x, y = extended_gcd(e, phi)
-    while gcd != 1:
-        e = random.randrange(1, phi)
-        gcd, x, y = extended_gcd(e, phi)
+    if gcd != 1:
+        return generate_keys(bits)
 
     d = x % phi
 
@@ -40,8 +42,11 @@ def generate_keys(bits, p=0, q=0):
 
 
 if __name__ == "__main__":
-    pub_key, priv_key = generate_keys(8)
+    pub_key, priv_key = generate_keys(30)
     print('Публичный ключ: ' + str(pub_key))
-    cipr = pow(123, pub_key[0]) % pub_key[1]
-    print(mod_pow(cipr, priv_key[0], priv_key[1]))
     print('Секреный ключ: ' + str(priv_key))
+    e, n = pub_key
+    d = priv_key[0]
+    cipr = mod_pow(123, e, n)
+    print(cipr)
+    print(mod_pow(cipr, d, n))
