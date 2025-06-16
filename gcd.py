@@ -20,8 +20,7 @@ def extended_gcd(a, b):
 
 
 if __name__ == "__main__":
-    print(34 * 34)
-    print(extended_gcd(34 * 34, 35))
+    print(extended_gcd(34, 35))
 
 
 

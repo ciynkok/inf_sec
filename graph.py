@@ -64,6 +64,5 @@ def print_graph(bits_len):
 
 
 if __name__ == "__main__":
-    # Размеры ключей для тестирования
-    bit_lengths = [i for i in range(4, 20)]
+    bit_lengths = [i for i in range(4, 15)]
     print_graph(bit_lengths)

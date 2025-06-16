@@ -22,11 +22,8 @@ def crack_on_mess(e, n, m):
 
 
 if __name__ == "__main__":
-    pub_key, private_key = shame_rsa.generate_keys(17)
-    print('Публичный ключ: ' + str(pub_key[0]))
-    print('Секреный ключ: ' + str(private_key[0]))
+    pub_key, private_key = shame_rsa.generate_keys(15)
     e, n = pub_key
-    # e = 65537
     mess = 123128
     cipr = mod_pow(mess, e, n)
     decode, k = crack_on_mess(e, n, cipr)
