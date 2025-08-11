@@ -42,11 +42,12 @@ def generate_keys(bits, p=0, q=0):
 
 
 if __name__ == "__main__":
-    pub_key, priv_key = generate_keys(30, 11, 13)
+    pub_key, priv_key = generate_keys(30)
     print('Публичный ключ: ' + str(pub_key))
     print('Секреный ключ: ' + str(priv_key))
     e, n = pub_key
     d = priv_key[0]
-    cipr = mod_pow(123, e, n)
+    message = 123
+    cipr = mod_pow(message, e, n)
     print(cipr)
     print(mod_pow(cipr, d, n))
