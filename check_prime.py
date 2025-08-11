@@ -55,5 +55,5 @@ def check_prime(n, k=5, div=False):
 
 
 if __name__ == "__main__":
-    print(check_prime(46073))
+    print(check_prime(4294967297, div=True))
 

@@ -42,7 +42,7 @@ def generate_keys(bits, p=0, q=0):
 
 
 if __name__ == "__main__":
-    pub_key, priv_key = generate_keys(30)
+    pub_key, priv_key = generate_keys(30, 11, 13)
     print('Публичный ключ: ' + str(pub_key))
     print('Секреный ключ: ' + str(priv_key))
     e, n = pub_key
