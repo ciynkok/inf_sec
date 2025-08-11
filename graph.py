@@ -21,38 +21,38 @@ def print_graph(bits_len):
         message = 123
         ciphertext = rsa_encrypt(message, public_key)
 
-        print("Факторизация")
+        print("Crack 1 way")
         start_time = time.time()
         d, f_iter = crack_rsa(e, n)
         f_time = time.time() - start_time
         f_times.append(f_time)
         f_iters.append(f_iter)
-        print(f"Итерации: {f_iter}, Время: {f_time:.4f} сек")
+        print(f"Iters: {f_iter}, Time: {f_time:.4f} сек")
 
-        print("Взлом на сообщении")
+        print("Crack 2 way")
         start_time = time.time()
         decode, m_iter = crack_on_mess(e, n, message)
         m_time = time.time() - start_time
         m_times.append(m_time)
         m_iters.append(m_iter)
-        print(f"Итерации: {m_iter}, Время: {m_time:.4f} сек")
+        print(f"Iters: {m_iter}, Time: {m_time:.4f} sec")
         bit_.append(bits)
 
     plt.figure(figsize=(14, 12))
 
     plt.subplot(2, 1, 1)
-    plt.plot(bit_lengths, f_times, 'bo-', label='Факторизация')
-    plt.plot(bit_lengths, m_times, 'rs-', label='Перебор сообщений')
+    plt.plot(bit_lengths, f_times, 'bo-', label='Crack 1 way')
+    plt.plot(bit_lengths, m_times, 'rs-', label='Crack 2 way')
 
-    plt.ylabel('Время (секунды)', fontsize=12)
+    plt.ylabel('Time', fontsize=12)
     plt.grid(True)
     plt.legend(fontsize=12)
 
     plt.subplot(2, 1, 2)
-    plt.plot(bit_lengths, f_iters, 'bo-', label='Факторизация')
-    plt.plot(bit_lengths, m_iters, 'rs-', label='Перебор сообщений')
+    plt.plot(bit_lengths, f_iters, 'bo-', label='Crack 1 way')
+    plt.plot(bit_lengths, m_iters, 'rs-', label='Crack 2 way')
 
-    plt.ylabel('Количество итераций', fontsize=12)
+    plt.ylabel('Quantity', fontsize=12)
     plt.yscale('log')
     plt.grid(True)
     plt.legend(fontsize=12)

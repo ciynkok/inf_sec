@@ -27,7 +27,7 @@ if __name__ == "__main__":
     mess = 123128
     cipr = mod_pow(mess, e, n)
     decode, k = crack_on_mess(e, n, cipr)
-    print('Сообщение: ' + str(mess))
-    print('Шифр: ' + str(cipr))
-    print('Рассшифровка: ' + str(decode))
-    print('Итерации: ' + str(k))
+    print('Massage: ' + str(mess))
+    print('Cipr: ' + str(cipr))
+    print('Decrypt: ' + str(decode))
+    print('Iters: ' + str(k))

@@ -22,7 +22,7 @@ def generate_keys(bits, p=0, q=0):
         q = generate_prime(bits)
 
     if not check_prime(p) and not check_prime(q):
-        raise ValueError('p или q не являются простыми')
+        raise ValueError('p or q is not prime')
 
     while p == q:
         q = generate_prime(bits)
@@ -43,8 +43,8 @@ def generate_keys(bits, p=0, q=0):
 
 if __name__ == "__main__":
     pub_key, priv_key = generate_keys(30)
-    print('Публичный ключ: ' + str(pub_key))
-    print('Секреный ключ: ' + str(priv_key))
+    print('Public key: ' + str(pub_key))
+    print('Secret key: ' + str(priv_key))
     e, n = pub_key
     d = priv_key[0]
     message = 123

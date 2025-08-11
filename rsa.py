@@ -68,7 +68,7 @@ def rsa_decrypt(ciphertext, private_key):
 
 if __name__ == "__main__":
     pub_key, priv_key = generate_keys(10)
-    in_text = input('Введите текскт: ')
+    in_text = input('Enter text: ')
     cipher = encrypt(in_text, pub_key)
     print(cipher)
     print(decrypt(cipher, priv_key))

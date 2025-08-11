@@ -33,7 +33,7 @@ if __name__ == "__main__":
     e, n = pub_key
     d = priv_key[0]
     d1, k = crack_rsa(e, n)
-    print('Секретный ключ: ' + str(d))
-    print('Расшифрованный секретный ключ: ' + str(d1))
-    print('Итерации: ' + str(k))
+    print('Secret key: ' + str(d))
+    print('Decrypted secret key: ' + str(d1))
+    print('Iters: ' + str(k))
 
